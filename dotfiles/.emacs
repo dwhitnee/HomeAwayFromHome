@@ -7,6 +7,7 @@
 ;; tell emacs to stop being clever with the backspace key
 (normal-erase-is-backspace-mode 0)
 
+;; tidy up whitespace in code
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 
@@ -15,7 +16,7 @@
 (menu-bar-mode nil)
 
 ;; don't echo shell commands
-(setq comint-process-echoes t) 
+(setq comint-process-echoes t)
 
 (setq c-tab-always-indent nil)
 (setq visible-bell t)
@@ -92,14 +93,14 @@
 (global-set-key "\C-z"  'scroll-one-line-up)
 (global-set-key "\C-\\" 'scroll-one-line-down)
 (global-set-key "\C-h"  'backward-delete-char-untabify)
-(global-set-key "\M-" 'help-for-help)  	; META ^H
-(global-set-key "\M-	"  'dabbrev-expand)	; META TAB
+(global-set-key "\M-" 'help-for-help)         ; META ^H
+(global-set-key "\M- "  'dabbrev-expand)     ; META TAB
 (setq dabbrev-case-replace nil)
 
 (global-set-key ""  'new-frame)
 (global-set-key ""  'ediff-revision)
 
-;; kill annoying "File .* changed on disk.  Reread from disk" modal
+;; kill annoying "File <foo> changed on disk.  Reread from disk" modal
 (setq use-dialog-box nil)
 
 
@@ -108,14 +109,14 @@
 ;; from http://www.egr.unlv.edu/stock_answers/emacs/arrow_keys.html
 ;;----------------------------------------------------------------------
 (if (not window-system)             ;; Only use in tty-sessions.
-	(progn
+        (progn
       (defvar arrow-keys-map (make-sparse-keymap) "Keymap for arrow keys")
       (define-key esc-map "O" arrow-keys-map)
       (define-key arrow-keys-map "A" 'previous-line)
       (define-key arrow-keys-map "B" 'next-line)
       (define-key arrow-keys-map "C" 'forward-char)
       (define-key arrow-keys-map "D" 'backward-char)
-	  )
+          )
   )
 
 ;;----------------------------------------------------------------------
@@ -130,7 +131,7 @@
 
 ;;----------------------------------------------------------------------
 
- 
+
 (setq load-path (append (list "~/emacs")  load-path))
 (setq load-path (append (list "~/emacs/site")  load-path))
 (setq load-path (append (list "~/emacs/html")  load-path))
@@ -168,31 +169,30 @@
 ;;(autoload 'c-mode "c-mode" "C Editing Mode" t)
 ;;(autoload 'c++-mode   "c++-mode" "C++ Editing Mode" t)
 
-(setq  foo-list '(("\\.h\\'"    . c++-mode)))
-(nconc foo-list '(("\\.html\\'" . xml-mode)))
-(nconc foo-list '(("\\.c\\'"    . c++-mode)))
-(nconc foo-list '(("\\.C\\'"    . c++-mode)))
-(nconc foo-list '(("\\.cc\\'"   . c++-mode)))
-(nconc foo-list '(("\\.cxx\\'"  . c++-mode)))
-(nconc foo-list '(("\\.c++\\'"  . c++-mode)))
-(nconc foo-list '(("\\.icc\\'"  . c++-mode)))
-(nconc foo-list '(("\\.inl\\'"  . c++-mode)))
-(nconc foo-list '(("\\.h\\'"    . c++-mode)))
-(nconc foo-list '(("\\.H\\'"    . c++-mode)))
-(nconc foo-list '(("\\.hh\\'"   . c++-mode)))
-(nconc foo-list '(("\\.hxx\\'"  . c++-mode)))
-(nconc foo-list '(("\\.h++\\'"  . c++-mode)))
-(nconc foo-list '(("\\.java\\'" . java-mode)))
-; (nconc foo-list '(("\\.jsp\\'"  . jsp-mode)))
-; (nconc foo-list '(("\\.jsp\\'"  . html-helper-mode)))
+(nconc mode-list '(("\\.html\\'"  . xml-mode)))
+(nconc mode-list '(("\\.rhtml\\'" . xml-mode)))
+(nconc mode-list '(("\\.jsp\\'"   . xml-mode)))
 
-(nconc foo-list auto-mode-alist)
-(setq auto-mode-alist foo-list)
+(nconc mode-list '(("\\.java\\'" . java-mode)))
 
+(nconc mode-list '(("\\.c\\'"    . c++-mode)))
+(nconc mode-list '(("\\.h\\'"    . c++-mode)))
+(nconc mode-list '(("\\.cc\\'"   . c++-mode)))
+(nconc mode-list '(("\\.cxx\\'"  . c++-mode)))
+(nconc mode-list '(("\\.c++\\'"  . c++-mode)))
+(nconc mode-list '(("\\.hh\\'"   . c++-mode)))
+(nconc mode-list '(("\\.hxx\\'"  . c++-mode)))
+(nconc mode-list '(("\\.h++\\'"  . c++-mode)))
+
+; (nconc mode-list '(("\\.jsp\\'"  . jsp-mode)))
+; (nconc mode-list '(("\\.jsp\\'"  . html-helper-mode)))
+
+(nconc mode-list auto-mode-alist)
+(setq auto-mode-alist mode-list)
 
 
 ;;;
-;;; JSP font/syntax Colors                             
+;;; JSP font/syntax Colors
 ;;;
 ;;; highlighted region
 (set-face-foreground  'region  "Black")
@@ -200,16 +200,16 @@
 (set-face-background 'secondary-selection "dodger blue")
 
 ;;; status bar (modeline)
-;(set-face-foreground  'modeline  "Black")       
+;(set-face-foreground  'modeline  "Black")
 ;(set-face-background  'modeline  "DarkGrey")
 
-;;; base window color 
+;;; base window color
 ;(set-background-color  "white")
 ;(set-foreground-color  "Black")
 
 ;;; hyperlinks
-(set-face-foreground  'highlight  "DarkGreen")     
-(set-face-background  'highlight  "white")     
+(set-face-foreground  'highlight  "DarkGreen")
+(set-face-background  'highlight  "white")
 
 ;;; code syntax colors
 (set-face-foreground  'font-lock-comment-face  "grey30")
@@ -218,7 +218,7 @@
 (set-face-foreground  'font-lock-string-face  "DarkOrange4")
 (set-face-foreground  'font-lock-keyword-face  "Black")
 (set-face-foreground  'font-lock-type-face  "Black")
-(set-face-foreground  'font-lock-variable-name-face  "Black")   
+(set-face-foreground  'font-lock-variable-name-face  "Black")
 ;(set-face-foreground  'font-lock-function-name-face  "Black")
 
 
@@ -301,17 +301,17 @@
 
 ;(setq c++-mode-hook
 ;      '(lambda ()
-;	 (setq c-argdecl-indent                  4)
-;	 (setq c-brace-imaginary-offset          0)
-;	 (setq c-brace-offset                   -4)
-;	 (setq c-continued-statement-offset      4)
-;	 (setq c-indent-level                    4)
-;	 (setq c-label-offset                   -2)
-;	 (setq c++-access-specifier-offset      -4)
-;	 (setq c++-comment-only-line-offset '(0 0))
-;	 (setq c++-empty-arglist-indent          4)
-;	 (setq c++-friend-offset                 0)
-;	 (define-key c++-mode-map "\15" 'reindent-then-newline-and-indent))
+;        (setq c-argdecl-indent                  4)
+;        (setq c-brace-imaginary-offset          0)
+;        (setq c-brace-offset                   -4)
+;        (setq c-continued-statement-offset      4)
+;        (setq c-indent-level                    4)
+;        (setq c-label-offset                   -2)
+;        (setq c++-access-specifier-offset      -4)
+;        (setq c++-comment-only-line-offset '(0 0))
+;        (setq c++-empty-arglist-indent          4)
+;        (setq c++-friend-offset                 0)
+;        (define-key c++-mode-map "\15" 'reindent-then-newline-and-indent))
 ;      )
 
 (defun cleanse-buffer (&optional arg)
@@ -379,30 +379,30 @@
 ;;       (hilit-set-mode-patterns
 ;;        'java-mode
 ;;        '(
-;; 	 ;; comments - do the javadoc ones differently
-;; 	 ("/\\*\\*" "\\*/" gray30)
-;; 	 ("/\\*" "\\*/" gray30)
-;; 	 ("//.*$" nil gray30)
-     
-;; 	 ;; strings
-;; 	 (hilit-string-find ?' darkorange4)
-;; 	 )
+;;       ;; comments - do the javadoc ones differently
+;;       ("/\\*\\*" "\\*/" gray30)
+;;       ("/\\*" "\\*/" gray30)
+;;       ("//.*$" nil gray30)
+
+;;       ;; strings
+;;       (hilit-string-find ?' darkorange4)
+;;       )
 ;;        )
 ;;       (hilit-set-mode-patterns
 ;;        'js2-mode
 ;;        '(
-;; 	 ;; comments - do the javadoc ones differently
-;; 	 ("//.*$" nil gray30)
-;; 	 )
+;;       ;; comments - do the javadoc ones differently
+;;       ("//.*$" nil gray30)
+;;       )
 ;;        )
-      
+
 ;;       ;;      (hilit-string-find ?' DarkGoldenrod)
 
 ;;       (setq hilit-quietly t)
 
-;;       (hilit-translate comment    'grey30
-;; 		       string     'darkorange4
-;; 		       )
+;;    (hilit-translate comment    'grey30
+;;                     string     'darkorange4
+;;                     )
 ;;       )
 ;;   )
 
