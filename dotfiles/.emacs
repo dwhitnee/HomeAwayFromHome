@@ -1,0 +1,489 @@
+;; disable cut buffer copying - slow over remote connections
+;; (setq interprogram-cut-function nil)
+
+(display-time)
+(setq inhibit-splash-screen t)
+
+;; tell emacs to stop being clever with the backspace key
+(normal-erase-is-backspace-mode 0)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
+
+(add-hook 'emacs-startup-hook (lambda () (tool-bar-mode -1)))
+; (tool-bar-mode nil)
+(menu-bar-mode nil)
+
+;; don't echo shell commands
+(setq comint-process-echoes t) 
+
+(setq c-tab-always-indent nil)
+(setq visible-bell t)
+(setq display-time-day-and-date 1)
+(setq default-major-mode 'indented-text-mode)
+;(setq text-mode-hook 'turn-on-auto-fill)
+;; Set the debug option to enable a backtrace when a problem occurs.
+; (setq debug-on-error t)
+
+
+;;-----------------------Dave's Definitions ------------------------------
+
+(autoload 'sql-oracle "sql" "Interactive SQL mode." t)
+
+(defun scroll-one-line-up (&optional arg)
+  "Scroll the selected window up (forward in the text) one line (or N lines)."
+  (interactive "p")
+  (scroll-up (or arg 1)))
+
+(defun scroll-one-line-down (&optional arg)
+  "Scroll the selected window down (backward in the text) one line (or N)."
+  (interactive "p")
+  (scroll-down (or arg 1)))
+
+;; already set in emacs-19.30
+
+;;(global-set-key [home]   'beginning-of-buffer)
+;;(global-set-key [end]    'end-of-buffer)
+;;(global-set-key [prior]  'scroll-down)
+;;(global-set-key [next]   'scroll-up)
+
+;; --- scroll wheel ---
+(defun up-slightly () (interactive) (scroll-up 5))
+(defun down-slightly () (interactive) (scroll-down 5))
+(global-set-key [mouse-4] 'down-slightly)
+(global-set-key [mouse-5] 'up-slightly)
+
+; (mouse-wheel-mode 1)
+
+(defun set-tab-4 (&optional arg)
+  "set tab width to 4"
+  (interactive "p")
+  (setq tab-width 4))
+
+(defun set-tab-8 (&optional arg)
+  "set tab width to 8"
+  (interactive "p")
+  (setq tab-width 8))
+
+(global-set-key "\M-O" 'set-tab-4)
+(global-set-key [f4]  'set-tab-4)
+(global-set-key [f8]  'set-tab-8)
+;(global-set-key [f5]  'ediff-revision)
+
+(global-set-key ""  'fixup-whitespace)
+
+;;(global-set-key [delete] 'delete-char)
+;;(global-set-key [backspace] 'backward-delete-char-untabify)
+
+(global-set-key [C-up]    'previous-line)
+(global-set-key [C-down]  'next-line)
+(global-set-key [C-left]  'backward-word)
+(global-set-key [C-right] 'forward-word)
+;(global-set-key [C-left]  'backward-char)
+;(global-set-key [C-right] 'forward-char)
+
+(global-set-key [M-up]    'scroll-one-line-up)
+(global-set-key [M-down]  'scroll-one-line-down)
+(global-set-key [M-left]  'beginning-of-line)
+(global-set-key [M-right] 'end-of-line)
+
+(global-set-key "\M-z"  'undo)
+
+(global-set-key "\C-z"  'scroll-one-line-up)
+(global-set-key "\C-\\" 'scroll-one-line-down)
+(global-set-key "\C-h"  'backward-delete-char-untabify)
+(global-set-key "\M-" 'help-for-help)  	; META ^H
+(global-set-key "\M-	"  'dabbrev-expand)	; META TAB
+(setq dabbrev-case-replace nil)
+
+(global-set-key ""  'new-frame)
+(global-set-key ""  'ediff-revision)
+
+;; kill annoying "File .* changed on disk.  Reread from disk" modal
+(setq use-dialog-box nil)
+
+
+;;----------------------------------------------------------------------
+;; fix arrow keys in dialup windows
+;; from http://www.egr.unlv.edu/stock_answers/emacs/arrow_keys.html
+;;----------------------------------------------------------------------
+(if (not window-system)             ;; Only use in tty-sessions.
+	(progn
+      (defvar arrow-keys-map (make-sparse-keymap) "Keymap for arrow keys")
+      (define-key esc-map "O" arrow-keys-map)
+      (define-key arrow-keys-map "A" 'previous-line)
+      (define-key arrow-keys-map "B" 'next-line)
+      (define-key arrow-keys-map "C" 'forward-char)
+      (define-key arrow-keys-map "D" 'backward-char)
+	  )
+  )
+
+;;----------------------------------------------------------------------
+;; Ruby Stuff
+
+(autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
+(setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
+(setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
+
+(setq ruby-indent-level 2)
+
+
+;;----------------------------------------------------------------------
+
+ 
+(setq load-path (append (list "~/emacs")  load-path))
+(setq load-path (append (list "~/emacs/site")  load-path))
+(setq load-path (append (list "~/emacs/html")  load-path))
+(setq load-path (append (list "~/emacs/site/mmm-mode")  load-path))
+
+;; steveyegge's Javascript mode
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+
+
+
+;; --------------------- Glenn's cool stuff ------------------------------
+
+(global-set-key "\C-\M-l" 'what-line)
+(global-set-key "\C-\M-j" 'goto-line)
+
+(fset 'comment "m/*  */m")
+(fset 'decomment "m")
+(global-set-key "c" 'comment)
+(global-set-key "" 'decomment)
+
+;; chop weirdness
+
+(autoload 'chop-move-up "chop" nil t)
+(autoload 'chop-move-down "chop" nil t)
+(global-set-key "\C-p" 'chop-move-up)
+(global-set-key "\C-n" 'chop-move-down)
+
+
+
+;;----------------------------------------------------------------------
+;;     C++ mode
+;;----------------------------------------------------------------------
+;;(autoload 'c-mode "c-mode" "C Editing Mode" t)
+;;(autoload 'c++-mode   "c++-mode" "C++ Editing Mode" t)
+
+(setq  foo-list '(("\\.h\\'"    . c++-mode)))
+(nconc foo-list '(("\\.html\\'" . xml-mode)))
+(nconc foo-list '(("\\.c\\'"    . c++-mode)))
+(nconc foo-list '(("\\.C\\'"    . c++-mode)))
+(nconc foo-list '(("\\.cc\\'"   . c++-mode)))
+(nconc foo-list '(("\\.cxx\\'"  . c++-mode)))
+(nconc foo-list '(("\\.c++\\'"  . c++-mode)))
+(nconc foo-list '(("\\.icc\\'"  . c++-mode)))
+(nconc foo-list '(("\\.inl\\'"  . c++-mode)))
+(nconc foo-list '(("\\.h\\'"    . c++-mode)))
+(nconc foo-list '(("\\.H\\'"    . c++-mode)))
+(nconc foo-list '(("\\.hh\\'"   . c++-mode)))
+(nconc foo-list '(("\\.hxx\\'"  . c++-mode)))
+(nconc foo-list '(("\\.h++\\'"  . c++-mode)))
+(nconc foo-list '(("\\.java\\'" . java-mode)))
+; (nconc foo-list '(("\\.jsp\\'"  . jsp-mode)))
+; (nconc foo-list '(("\\.jsp\\'"  . html-helper-mode)))
+
+(nconc foo-list auto-mode-alist)
+(setq auto-mode-alist foo-list)
+
+
+
+;;;
+;;; JSP font/syntax Colors                             
+;;;
+;;; highlighted region
+(set-face-foreground  'region  "Black")
+(set-face-background  'region  "LightCyan")
+(set-face-background 'secondary-selection "dodger blue")
+
+;;; status bar (modeline)
+;(set-face-foreground  'modeline  "Black")       
+;(set-face-background  'modeline  "DarkGrey")
+
+;;; base window color 
+;(set-background-color  "white")
+;(set-foreground-color  "Black")
+
+;;; hyperlinks
+(set-face-foreground  'highlight  "DarkGreen")     
+(set-face-background  'highlight  "white")     
+
+;;; code syntax colors
+(set-face-foreground  'font-lock-comment-face  "grey30")
+;(set-face-foreground  'font-lock-doc-face  "DarkViolet")
+(set-face-foreground  'font-lock-constant-face  "Black")
+(set-face-foreground  'font-lock-string-face  "DarkOrange4")
+(set-face-foreground  'font-lock-keyword-face  "Black")
+(set-face-foreground  'font-lock-type-face  "Black")
+(set-face-foreground  'font-lock-variable-name-face  "Black")   
+;(set-face-foreground  'font-lock-function-name-face  "Black")
+
+
+
+
+
+
+
+;; ----------------- bgreen stuff ----------------------------------------
+
+(defconst my-c-style
+  '((c-offsets-alist . ((case-label        . +)
+                        (substatement-open . 0))
+    ))
+  "Dave's C Programming Style")
+
+
+(defun my-c-mode-common-hook ()
+  ;; my customizations for all of c-mode, c++-mode, and objc-mode
+  ;; add my personal style and set it for the current buffer
+  (c-add-style "PERSONAL" my-c-style t)
+  (setq c-basic-offset 4)
+  (setq c-brace-offset -4)
+  (make-local-variable 'tab-width)
+;  (setq indent-tabs-mode 'nil)
+;  (setq c-indent-level 2)
+;  (setq c-continued-statment-offset 2)
+;  (setq c-label-offset 2)
+;  (setq c-continued-brace-offset 0)
+;  (setq c-argdeccl-indent 0)
+;  (setq comment-multi-line t)
+;  (setq tab-width 4)
+;  (make-local-variable 'tab-stop-list)
+;  (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
+  )
+
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+;(defconst my-java-style
+;  '((c-offsets-alist . ((access-label        . 0))
+;    ))
+;  "Dave's Java Programming Style")
+
+(defun my-java-mode-hook ()
+  ;; my customizations for java mode
+  ;; behave like Mac/PC IDEs -- everything 4 space tabs
+;  (c-add-style "PERSONALJAVA" my-java-style t)
+;  (setq c-basic-offset              4)
+  (setq html-helper-basic-offset     4)
+  (c-set-offset 'inline-open        0)     ;; for function braces
+  (setq tab-width                   8)
+;  (setq indent-tabs-mode t)
+)
+
+(defun my-javascript-mode-hook ()
+  ;; my customizations for javascript mode
+  ;; behave like Mac/PC IDEs -- everything 4 space tabs
+  (setq js2-bounce-indent-flag nil)
+  (setq js2-highlight-level 3)
+  (setq js2-basic-offset 4)
+  ;; no auto-closing parens/quotes
+  (set-face-foreground 'js2-external-variable-face "DarkRed")
+  (setq indent-tabs-mode nil);   ;; no tab chars, just spaces
+  (global-set-key ""  'comment-region)
+)
+(setq js2-mirror-mode nil)
+
+
+(add-hook 'js2-mode-hook 'my-javascript-mode-hook)
+(add-hook 'java-mode-hook 'my-java-mode-hook)
+
+(add-hook 'html-helper-mode-hook 'my-java-mode-hook)
+(add-hook 'html-mode-mmm-hook 'my-java-mode-hook)
+(add-hook 'html-mode-mmm-mode-hook 'my-java-mode-hook)
+(add-hook 'java-submode-hook 'my-java-mode-hook)
+(add-hook 'java-mode-submode-hook 'my-java-mode-hook)
+
+;; ---- end bgreen
+
+
+;(setq c++-mode-hook
+;      '(lambda ()
+;	 (setq c-argdecl-indent                  4)
+;	 (setq c-brace-imaginary-offset          0)
+;	 (setq c-brace-offset                   -4)
+;	 (setq c-continued-statement-offset      4)
+;	 (setq c-indent-level                    4)
+;	 (setq c-label-offset                   -2)
+;	 (setq c++-access-specifier-offset      -4)
+;	 (setq c++-comment-only-line-offset '(0 0))
+;	 (setq c++-empty-arglist-indent          4)
+;	 (setq c++-friend-offset                 0)
+;	 (define-key c++-mode-map "\15" 'reindent-then-newline-and-indent))
+;      )
+
+(defun cleanse-buffer (&optional arg)
+       "Remove trailing white space, convert tabs to spaces, remove CR's, etc."
+       (interactive "p")
+       (setq max-column-num 0
+             max-column-line-num 0)
+       (save-excursion
+          (untabify (point-min) (point-max))
+          (replace-string "\^M" "")
+          (beginning-of-buffer)
+          (replace-regexp "" "")
+          (beginning-of-buffer)
+          (if (equal arg "C")
+              (message "Formatting C source code"))
+          (while (not (eobp))
+              (if (equal arg "C")
+                 (c-indent-command))
+              (end-of-line)
+              (delete-horizontal-space)
+              (if ( > (current-column) max-column-num)
+                  (setq max-column-num (current-column)
+                        max-column-line-num (count-lines (point-min) (point))))
+              (forward-line)
+          )
+          (while (= (preceding-char) 10) (backward-delete-char 1))
+          (insert-char 10 1)
+       )
+       (message "Maximum column = %d (line %d)"
+           max-column-num max-column-line-num)
+)
+
+
+;;----------------------------------------------------------------------
+;;  emacs 18 stuff
+;;----------------------------------------------------------------------
+;;(global-set-key "\M-[" nil)                      ;; remove "esc-[" binding
+;;(global-set-key "\M-[229z" 'beginning-of-buffer) ;; F9   Home
+;;(global-set-key "\M-[230z" 'end-of-buffer)       ;; F10  End
+;;(global-set-key "\M-[231z" 'scroll-down)         ;; F11  Page Up
+;;(global-set-key "\M-[232z" 'scroll-up)           ;; F12  Page Down
+;;(global-set-key "\C-?" 'forward-char)              ;; Delete
+;;(global-set-key "\M-[228z" 'eval-region) ;; F5
+
+
+;;(global-set-key [(shift insert)]
+;;  (lambda () (interactive) (x-insert-selection t nil)))
+
+;;(load-library "gnuserv")
+;;(gnuserv-start)
+
+
+;;----------------------------------------------------------------------
+;;  highlighting
+;;----------------------------------------------------------------------
+
+;; no bold with small font, looks like crap
+;; must come before hilit19
+
+;; do highlighting if in X
+;; (if (not (not window-system))
+;;     (progn
+;;       (load "hilit19")
+
+;;       (hilit-set-mode-patterns
+;;        'java-mode
+;;        '(
+;; 	 ;; comments - do the javadoc ones differently
+;; 	 ("/\\*\\*" "\\*/" gray30)
+;; 	 ("/\\*" "\\*/" gray30)
+;; 	 ("//.*$" nil gray30)
+     
+;; 	 ;; strings
+;; 	 (hilit-string-find ?' darkorange4)
+;; 	 )
+;;        )
+;;       (hilit-set-mode-patterns
+;;        'js2-mode
+;;        '(
+;; 	 ;; comments - do the javadoc ones differently
+;; 	 ("//.*$" nil gray30)
+;; 	 )
+;;        )
+      
+;;       ;;      (hilit-string-find ?' DarkGoldenrod)
+
+;;       (setq hilit-quietly t)
+
+;;       (hilit-translate comment    'grey30
+;; 		       string     'darkorange4
+;; 		       )
+;;       )
+;;   )
+
+
+
+(put 'upcase-region 'disabled nil)
+
+
+(defun view-logs-mode ()
+ "Add some syntax highlighting to existing mode, so it's better
+for viewing logs and such (msw)"
+ (interactive)
+ (save-excursion
+   (goto-char (point-min))
+   (while (re-search-forward "\\([a-zA-Z]\\)'\\([a-zA-Z]\\)"
+                             nil t)
+     (replace-match (concat "\\1\\\\'\\2") nil nil)
+     ;(message "Replaced a '")
+     )
+   (while (re-search-forward "
+$" nil t)
+     (replace-match "") ;; strip ^M's at end of line
+     )
+   )
+ (font-lock-add-keywords
+  nil ;; Apply to current buffer only
+  '(("\\(FLRVEventLoop: *[a-zA-Z0-9_-]+\\)" 1 font-lock-keyword-face)
+    ("\\(_result *=\\)" 1 font-lock-keyword-face)
+    ("\\(total\.count *= *[0-9]+\\)" 1 font-lock-keyword-face)
+    ("\\(request *=\\)" 1 font-lock-keyword-face)
+    ("\\(items\.[0-9]+ *=\\)" 1 font-lock-keyword-face)
+    ( "\\(: *\\(WARN\\|ERROR\\|FATAL\\|CRITICAL\\)\\|\\[ *\\(WARN\\|ERROR\\|FATAL\\|CRITICAL\\) *\\]\\)"   1 font-lock-warning-face)
+    ("\\(DEBUG\\)" 1 font-lock-comment-face)         ("\\(INFO\\)" 1 font-lock-constant-face)         ("\\([a-zA-Z0-9_.-]*Exception\\)" 1 font-lock-warning-face)
+    ("\\(^WARN\\) +[0-9:]*" 1 font-lock-warning-face)
+    ;; source file line reference:
+    ("\\([a-zA-Z_][a-zA-Z_0-9.-]+\\):[0-9]+[:\)]" 1 font-lock-comment-face)
+    ("[a-zA-Z_][a-zA-Z_0-9.-]+:\\([0-9]+\\)[:\)]" 1 font-lock-variable-name-face)
+    ("\\([a-zA-Z0-9_.-]+\\) *=" 1 font-lock-variable-name-face)
+    ("\\(.*(total) +=.*\\)" 1 font-lock-keyword-face)
+    ("\\(#.*$\\)" 1 font-lock-comment-face)         ))
+ (font-lock-fontify-buffer)
+ )
+
+
+;(set-face-foreground  'font-lock-reference-face     "red" )
+(set-face-foreground  'font-lock-keyword-face       "grey20" )
+(set-face-foreground  'font-lock-warning-face       "blue" )
+(set-face-foreground  'font-lock-function-name-face "purple" )
+(set-face-foreground  'font-lock-comment-face       "grey30" )
+
+(global-font-lock-mode t)
+(setq font-lock-maximum-decoration t)
+
+;;(custom-set-variables
+  ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+  ;; Your init file should contain only one such instance.
+;; '(js2-mirror-mode nil))
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
+  ;; Your init file should contain only one such instance.
+ )
+
+
+
+(eval-after-load "ediff"
+  '(progn
+     (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+))
+
+;; (eval-after-load "ediff"
+;;   '(progn
+;;      ;; Turn off help echoing for ediff overlays.  This is better for
+;;      ;; slow network connections.
+;;      (defun ediff-set-overlay-face (extent face)
+;;        (ediff-overlay-put extent 'face face))
+
+;;      ;; Don't create a new frame for ediff control.  That can take
+;;      ;; a long time if running over a slow connection.
+;;      (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;;      ;; In ediff, show the two buffers side-by-side.
+;;      (setq ediff-split-window-function 'split-window-horizontally)
+;; ))
