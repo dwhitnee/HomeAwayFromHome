@@ -1,17 +1,33 @@
-# Run on every new zsh, interactive or batch
+# zsh startup - Run on every interactive shell
 
-# configs are broken up by file, with .localrc as a per-machine override
+# How things get invoked at login:
+#
+# /etc/zshenv      (set system functions, load profile, env)
+#   - /etc/profile   (also sets system funcs)
+#     - /etc/environment  (set base PATH, MANPATH, LD_LIB_PATH)
+#   - /etc/environment
+# .zshenv
+#   - functions
+#   - config
+#   - aliases
+#   - .localrc
+# --------
+# /etc/zshrc     (These are sourced for interactive shells only)
+# .zshrc
+# --------
+# /etc/zlogin     (These are sourced for login shells only)
+# .environment
+# .zlogin
+#----------------------------------------------------------------------
 
-#root=..
-root=${HOME}
+# This file is for interactive stuff only, general stuff should go in zshenv
 
-rc_files=(
-    zsh/functions
-    zsh/config
-    zsh/aliases
-    .localrc
-  )
+[[ -f ${HOME}/zsh/aliases ]] && . ${HOME}/zsh/aliases
 
-for rc_file in $rc_files; do
-    [[ -f $root/$rc_file ]] && . $root/$rc_file
-done
+PROMPT=' %n@%m zsh> '
+
+export EDITOR=emacs
+export PAGER=less
+# what emacs will run for a shell
+export ESHELL=/bin/zsh
+

@@ -1,19 +1,18 @@
 echo "zsh config"
 
 export PATH=/usr/local/bin/:/usr/local/sbin:$PATH:/opt/local/bin:/usr/local/mysql/bin
-
-export EDITOR=emacs
 export JAVA_HOME=/Library/Java/Home
-
+export XAPPLRESDIR=$HOME/app-defaults/
 
 MAILCHECK=90000 # never
 HISTFILE=${HOME}/.history
 HISTSIZE=1000
 SAVEHIST=1000
 
-PROMPT=' %n@%m zsh> '
 
-
-setopt ignoreeof
+setopt ignoreeof            # dont logout on ctrl-D
 setopt noclobber            # don't clobber files w/redirection(>)
+setopt no_nomatch
+setopt nohup                # dont kill running jobs when shell exits
+setopt append_history       # keep cumulative history file, shared among shells
 

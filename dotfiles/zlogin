@@ -1,6 +1,4 @@
-# Interactive login shell actions only
-
-export PROMPT=" %m.$USER> "     # host.user>
+# login shell actions only
 
 [[ -f ${HOME}~/.environment ]] && . ${HOME}/.environment
 

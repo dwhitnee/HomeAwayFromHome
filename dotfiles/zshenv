@@ -1,0 +1,17 @@
+# zsh startup - run on *every* shell, batch or interactive
+#  Should produce no output
+
+# configs are broken up by file, with .localrc as a per-machine override
+
+#root=..
+root=${HOME}
+
+rc_files=(
+    zsh/functions
+    zsh/config
+    .localrc
+  )
+
+for rc_file in $rc_files; do
+    [[ -f $root/$rc_file ]] && . $root/$rc_file
+done
