@@ -1,11 +1,19 @@
-HomeAwayFromHome
+== HomeAwayFromHome
 ================
 
-common dotfiles and other global config
+common dotfiles and other global emacs and zsh configuration
 
 == Installation
 
   git clone git://github.com/dwhitnee/HomeAwayFromHome ~/somewhere
   cd ~/somewhere
   rake install
+
+== Misc
+
+Random fun commands:
+
+ cd ....
+ mandelbrot
+
 
