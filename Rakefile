@@ -22,7 +22,7 @@ task :install do
   Dir.chdir("..")
 
   Dir.glob('*[^~]').each do |file|
-    next if %w[dotfiles Rakefile README.md LICENSE].include? file
+    next if %w[dotfiles Rakefile README.rdoc LICENSE].include? file
     src  = "#{ENV['PWD'] }/#{file}"
     dest = "#{ENV['HOME']}/#{file}"
 
