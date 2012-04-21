@@ -1,0 +1,19 @@
+echo "zsh config"
+
+export PATH=/usr/local/bin/:/usr/local/sbin:$PATH:/opt/local/bin:/usr/local/mysql/bin
+
+export EDITOR=emacs
+export JAVA_HOME=/Library/Java/Home
+
+
+MAILCHECK=90000 # never
+HISTFILE=${HOME}/.history
+HISTSIZE=1000
+SAVEHIST=1000
+
+PROMPT=' %n@%m zsh> '
+
+
+setopt ignoreeof
+setopt noclobber            # don't clobber files w/redirection(>)
+

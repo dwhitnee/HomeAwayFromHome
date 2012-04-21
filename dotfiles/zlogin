@@ -1,0 +1,11 @@
+# Interactive login shell actions only
+
+export PROMPT=" %m.$USER> "     # host.user>
+
+[[ -f ${HOME}~/.environment ]] && . ${HOME}/.environment
+
+# Kerberos
+if ! klist -s; then
+  kinit -f
+fi
+
