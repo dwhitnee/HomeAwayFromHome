@@ -1,0 +1,8 @@
+setenv() {
+    export $1="$2"
+}
+
+cd() {
+    builtin cd "$@";
+    echo $PWD;
+}
