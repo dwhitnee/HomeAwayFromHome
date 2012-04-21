@@ -106,17 +106,16 @@
 
 ;;----------------------------------------------------------------------
 ;; fix arrow keys in dialup windows
-;; from http://www.egr.unlv.edu/stock_answers/emacs/arrow_keys.html
 ;;----------------------------------------------------------------------
 (if (not window-system)             ;; Only use in tty-sessions.
-        (progn
+    (progn
       (defvar arrow-keys-map (make-sparse-keymap) "Keymap for arrow keys")
       (define-key esc-map "O" arrow-keys-map)
       (define-key arrow-keys-map "A" 'previous-line)
       (define-key arrow-keys-map "B" 'next-line)
       (define-key arrow-keys-map "C" 'forward-char)
       (define-key arrow-keys-map "D" 'backward-char)
-          )
+      )
   )
 
 ;;----------------------------------------------------------------------
@@ -409,43 +408,6 @@
 
 
 (put 'upcase-region 'disabled nil)
-
-
-(defun view-logs-mode ()
- "Add some syntax highlighting to existing mode, so it's better
-for viewing logs and such (msw)"
- (interactive)
- (save-excursion
-   (goto-char (point-min))
-   (while (re-search-forward "\\([a-zA-Z]\\)'\\([a-zA-Z]\\)"
-                             nil t)
-     (replace-match (concat "\\1\\\\'\\2") nil nil)
-     ;(message "Replaced a '")
-     )
-   (while (re-search-forward "
-$" nil t)
-     (replace-match "") ;; strip ^M's at end of line
-     )
-   )
- (font-lock-add-keywords
-  nil ;; Apply to current buffer only
-  '(("\\(FLRVEventLoop: *[a-zA-Z0-9_-]+\\)" 1 font-lock-keyword-face)
-    ("\\(_result *=\\)" 1 font-lock-keyword-face)
-    ("\\(total\.count *= *[0-9]+\\)" 1 font-lock-keyword-face)
-    ("\\(request *=\\)" 1 font-lock-keyword-face)
-    ("\\(items\.[0-9]+ *=\\)" 1 font-lock-keyword-face)
-    ( "\\(: *\\(WARN\\|ERROR\\|FATAL\\|CRITICAL\\)\\|\\[ *\\(WARN\\|ERROR\\|FATAL\\|CRITICAL\\) *\\]\\)"   1 font-lock-warning-face)
-    ("\\(DEBUG\\)" 1 font-lock-comment-face)         ("\\(INFO\\)" 1 font-lock-constant-face)         ("\\([a-zA-Z0-9_.-]*Exception\\)" 1 font-lock-warning-face)
-    ("\\(^WARN\\) +[0-9:]*" 1 font-lock-warning-face)
-    ;; source file line reference:
-    ("\\([a-zA-Z_][a-zA-Z_0-9.-]+\\):[0-9]+[:\)]" 1 font-lock-comment-face)
-    ("[a-zA-Z_][a-zA-Z_0-9.-]+:\\([0-9]+\\)[:\)]" 1 font-lock-variable-name-face)
-    ("\\([a-zA-Z0-9_.-]+\\) *=" 1 font-lock-variable-name-face)
-    ("\\(.*(total) +=.*\\)" 1 font-lock-keyword-face)
-    ("\\(#.*$\\)" 1 font-lock-comment-face)         ))
- (font-lock-fontify-buffer)
- )
-
 
 ;(set-face-foreground  'font-lock-reference-face     "red" )
 (set-face-foreground  'font-lock-keyword-face       "grey20" )

@@ -8,4 +8,3 @@ export PROMPT=" %m.$USER> "     # host.user>
 if ! klist -s; then
   kinit -f
 fi
-

@@ -8,12 +8,14 @@ task :install do
 
   Dir.chdir("dotfiles")
   Dir.glob("[^#]*[^~]").each do |file|
+
+    src  = "#{ENV['PWD'] }/#{file}"
     dest = "#{ENV['HOME']}/.#{file}"
 
     if File.exist?( dest )
-      replace_file( file, dest )
+      replace_file( src, dest )
     else
-      link_file( file, dest)
+      link_file( src, dest)
     end
 
   end
@@ -21,12 +23,13 @@ task :install do
 
   Dir.glob('*[^~]').each do |file|
     next if %w[dotfiles Rakefile README.md LICENSE].include? file
+    src  = "#{ENV['PWD'] }/#{file}"
     dest = "#{ENV['HOME']}/#{file}"
 
     if File.exist?( dest )
-      replace_file( file, dest )
+      replace_file( src, dest )
     else
-      link_file( file, dest)
+      link_file( src, dest)
     end
 
   end
@@ -39,7 +42,7 @@ def replace_file( src, dest )
   if File.identical? src, dest
     puts "identical #{dest}, ignoring"
   else
-    puts "mv -f #{dest} #{dest}.orig"
+    puts "mv` #{dest} #{dest}.orig"
     # File.rename( dest, "#{dest}.orig" )
     link_file( src, dest )
   end
@@ -52,7 +55,7 @@ def link_file( src, dest )
   if File.symlink?( dest )
     puts "#{dest} is already a symlink, ignoring"
   else
-    puts "linking #{src} to #{dest} "
+    puts "ln -s #{src} #{dest} "
     # File.symlink( src, dest )
   end
 end

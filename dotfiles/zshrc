@@ -2,8 +2,8 @@
 
 # configs are broken up by file, with .localrc as a per-machine override
 
-root=..
-#root=${HOME}
+#root=..
+root=${HOME}
 
 rc_files=(
     zsh/functions
