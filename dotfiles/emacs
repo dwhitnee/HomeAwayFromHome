@@ -11,7 +11,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 
-(add-hook 'emacs-startup-hook (lambda () (tool-bar-mode -1)))
+; (add-hook 'emacs-startup-hook (lambda () (tool-bar-mode -1)))
 ; (tool-bar-mode nil)
 (menu-bar-mode nil)
 
@@ -168,26 +168,28 @@
 ;;(autoload 'c-mode "c-mode" "C Editing Mode" t)
 ;;(autoload 'c++-mode   "c++-mode" "C++ Editing Mode" t)
 
-(nconc mode-list '(("\\.html\\'"  . xml-mode)))
-(nconc mode-list '(("\\.rhtml\\'" . xml-mode)))
-(nconc mode-list '(("\\.jsp\\'"   . xml-mode)))
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-(nconc mode-list '(("\\.java\\'" . java-mode)))
+(add-to-list 'auto-mode-alist '("\\.html\\'"  . xml-mode))
+(add-to-list 'auto-mode-alist '("\\.rhtml\\'" . xml-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'"   . xml-mode))
 
-(nconc mode-list '(("\\.c\\'"    . c++-mode)))
-(nconc mode-list '(("\\.h\\'"    . c++-mode)))
-(nconc mode-list '(("\\.cc\\'"   . c++-mode)))
-(nconc mode-list '(("\\.cxx\\'"  . c++-mode)))
-(nconc mode-list '(("\\.c++\\'"  . c++-mode)))
-(nconc mode-list '(("\\.hh\\'"   . c++-mode)))
-(nconc mode-list '(("\\.hxx\\'"  . c++-mode)))
-(nconc mode-list '(("\\.h++\\'"  . c++-mode)))
+(add-to-list 'auto-mode-alist '("\\.java\\'" . java-mode))
 
-; (nconc mode-list '(("\\.jsp\\'"  . jsp-mode)))
-; (nconc mode-list '(("\\.jsp\\'"  . html-helper-mode)))
+(add-to-list 'auto-mode-alist '("\\.c\\'"    . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'"    . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cc\\'"   . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cxx\\'"  . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.c++\\'"  . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hh\\'"   . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hxx\\'"  . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h++\\'"  . c++-mode))
 
-(nconc mode-list auto-mode-alist)
-(setq auto-mode-alist mode-list)
+; (add-to-list 'auto-mode-alist '("\\.jsp\\'"  . jsp-mode))
+; (add-to-list 'auto-mode-alist '("\\.jsp\\'"  . html-helper-mode))
+
+;; (nconc mode-list auto-mode-alist)
+;; (setq auto-mode-alist mode-list)
 
 
 ;;;
