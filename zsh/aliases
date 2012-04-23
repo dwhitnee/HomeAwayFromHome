@@ -1,6 +1,7 @@
 echo "zsh aliases"
 
 alias ls="ls -CF"
+alias sl="ls"
 alias ll="ls -l"
 alias m="more"
 alias k="exit"
