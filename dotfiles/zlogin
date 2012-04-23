@@ -1,3 +1,4 @@
 # login shell actions only
 
+# .environment is shell-independent, but site-specific setup
 [[ -f ${HOME}~/.environment ]] && . ${HOME}/.environment
