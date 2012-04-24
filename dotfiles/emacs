@@ -1,5 +1,12 @@
-;; disable cut buffer copying - slow over remote connections
-;; (setq interprogram-cut-function nil)
+;;
+;;  Common Emacs configuration file
+;;  site-specific stuff should be in .emacs-site
+
+(setq load-path (append (list "~/emacs")  load-path))
+(setq load-path (append (list "~/emacs")  load-path))
+(setq load-path (append (list "~/emacs/site")  load-path))
+
+(load "~/.emacs.local")
 
 (display-time)
 (setq inhibit-splash-screen t)
@@ -15,13 +22,15 @@
 ; (tool-bar-mode nil)
 (menu-bar-mode nil)
 
-;; don't echo shell commands
-(setq comint-process-echoes t)
+;; kill annoying "File <foo> changed on disk.  Reread from disk" modal
+(setq use-dialog-box nil)
 
-(setq c-tab-always-indent nil)
+(setq comint-process-echoes t)     ;; don't echo shell commands
+(setq c-tab-always-indent nil)     ;; no tabs!!!
 (setq visible-bell t)
 (setq display-time-day-and-date 1)
 (setq default-major-mode 'indented-text-mode)
+
 ;(setq text-mode-hook 'turn-on-auto-fill)
 ;; Set the debug option to enable a backtrace when a problem occurs.
 ; (setq debug-on-error t)
@@ -41,13 +50,6 @@
   (interactive "p")
   (scroll-down (or arg 1)))
 
-;; already set in emacs-19.30
-
-;;(global-set-key [home]   'beginning-of-buffer)
-;;(global-set-key [end]    'end-of-buffer)
-;;(global-set-key [prior]  'scroll-down)
-;;(global-set-key [next]   'scroll-up)
-
 ;; --- scroll wheel ---
 (defun up-slightly () (interactive) (scroll-up 5))
 (defun down-slightly () (interactive) (scroll-down 5))
@@ -56,20 +58,13 @@
 
 ; (mouse-wheel-mode 1)
 
-(defun set-tab-4 (&optional arg)
-  "set tab width to 4"
-  (interactive "p")
+(defun set-tab-4 (&optional arg) "set tab width to 4" (interactive "p")
   (setq tab-width 4))
-
-(defun set-tab-8 (&optional arg)
-  "set tab width to 8"
-  (interactive "p")
+(defun set-tab-8 (&optional arg) "set tab width to 8" (interactive "p")
   (setq tab-width 8))
 
-(global-set-key "\M-O" 'set-tab-4)
 (global-set-key [f4]  'set-tab-4)
 (global-set-key [f8]  'set-tab-8)
-;(global-set-key [f5]  'ediff-revision)
 
 (global-set-key ""  'fixup-whitespace)
 
@@ -80,8 +75,6 @@
 (global-set-key [C-down]  'next-line)
 (global-set-key [C-left]  'backward-word)
 (global-set-key [C-right] 'forward-word)
-;(global-set-key [C-left]  'backward-char)
-;(global-set-key [C-right] 'forward-char)
 
 (global-set-key [M-up]    'scroll-one-line-up)
 (global-set-key [M-down]  'scroll-one-line-down)
@@ -93,15 +86,13 @@
 (global-set-key "\C-z"  'scroll-one-line-up)
 (global-set-key "\C-\\" 'scroll-one-line-down)
 (global-set-key "\C-h"  'backward-delete-char-untabify)
-(global-set-key "\M-" 'help-for-help)         ; META ^H
-(global-set-key "\M- "  'dabbrev-expand)     ; META TAB
+(global-set-key "\M-" 'help-for-help)        ; META ^H
+(global-set-key "\M- "  'dabbrev-expand)       ; META TAB
 (setq dabbrev-case-replace nil)
 
 (global-set-key ""  'new-frame)
 (global-set-key ""  'ediff-revision)
-
-;; kill annoying "File <foo> changed on disk.  Reread from disk" modal
-(setq use-dialog-box nil)
+;(global-set-key [f5]  'ediff-revision)
 
 
 ;;----------------------------------------------------------------------
@@ -131,15 +122,8 @@
 ;;----------------------------------------------------------------------
 
 
-(setq load-path (append (list "~/emacs")  load-path))
-(setq load-path (append (list "~/emacs/site")  load-path))
 (setq load-path (append (list "~/emacs/html")  load-path))
 (setq load-path (append (list "~/emacs/site/mmm-mode")  load-path))
-
-;; steveyegge's Javascript mode
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
 
 
 
@@ -161,6 +145,10 @@
 (global-set-key "\C-n" 'chop-move-down)
 
 
+
+;; steveyegge's Javascript mode
+;(autoload 'js2-mode "js2" nil t)
+;(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;;----------------------------------------------------------------------
 ;;     C++ mode
@@ -185,28 +173,21 @@
 (add-to-list 'auto-mode-alist '("\\.hxx\\'"  . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h++\\'"  . c++-mode))
 
-; (add-to-list 'auto-mode-alist '("\\.jsp\\'"  . jsp-mode))
-; (add-to-list 'auto-mode-alist '("\\.jsp\\'"  . html-helper-mode))
-
 ;; (nconc mode-list auto-mode-alist)
 ;; (setq auto-mode-alist mode-list)
 
 
+
 ;;;
-;;; JSP font/syntax Colors
+;;; JSP font/syntax Colors - kinda blows
 ;;;
 ;;; highlighted region
+; (add-to-list 'auto-mode-alist '("\\.jsp\\'"  . jsp-mode))
+; (add-to-list 'auto-mode-alist '("\\.jsp\\'"  . html-helper-mode))
+
 (set-face-foreground  'region  "Black")
 (set-face-background  'region  "LightCyan")
 (set-face-background 'secondary-selection "dodger blue")
-
-;;; status bar (modeline)
-;(set-face-foreground  'modeline  "Black")
-;(set-face-background  'modeline  "DarkGrey")
-
-;;; base window color
-;(set-background-color  "white")
-;(set-foreground-color  "Black")
 
 ;;; hyperlinks
 (set-face-foreground  'highlight  "DarkGreen")
@@ -221,9 +202,6 @@
 (set-face-foreground  'font-lock-type-face  "Black")
 (set-face-foreground  'font-lock-variable-name-face  "Black")
 ;(set-face-foreground  'font-lock-function-name-face  "Black")
-
-
-
 
 
 
@@ -253,30 +231,20 @@
 ;  (setq comment-multi-line t)
 ;  (setq tab-width 4)
 ;  (make-local-variable 'tab-stop-list)
-;  (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
   )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
-;(defconst my-java-style
-;  '((c-offsets-alist . ((access-label        . 0))
-;    ))
-;  "Dave's Java Programming Style")
-
 (defun my-java-mode-hook ()
   ;; my customizations for java mode
-  ;; behave like Mac/PC IDEs -- everything 4 space tabs
-;  (c-add-style "PERSONALJAVA" my-java-style t)
-;  (setq c-basic-offset              4)
   (setq html-helper-basic-offset     4)
   (c-set-offset 'inline-open        0)     ;; for function braces
   (setq tab-width                   8)
-;  (setq indent-tabs-mode t)
+  (setq indent-tabs-mode nil)
 )
 
 (defun my-javascript-mode-hook ()
   ;; my customizations for javascript mode
-  ;; behave like Mac/PC IDEs -- everything 4 space tabs
   (setq js2-bounce-indent-flag nil)
   (setq js2-highlight-level 3)
   (setq js2-basic-offset 4)
@@ -290,6 +258,7 @@
 
 (add-hook 'js2-mode-hook 'my-javascript-mode-hook)
 (add-hook 'java-mode-hook 'my-java-mode-hook)
+
 
 (add-hook 'html-helper-mode-hook 'my-java-mode-hook)
 (add-hook 'html-mode-mmm-hook 'my-java-mode-hook)
@@ -344,25 +313,6 @@
        (message "Maximum column = %d (line %d)"
            max-column-num max-column-line-num)
 )
-
-
-;;----------------------------------------------------------------------
-;;  emacs 18 stuff
-;;----------------------------------------------------------------------
-;;(global-set-key "\M-[" nil)                      ;; remove "esc-[" binding
-;;(global-set-key "\M-[229z" 'beginning-of-buffer) ;; F9   Home
-;;(global-set-key "\M-[230z" 'end-of-buffer)       ;; F10  End
-;;(global-set-key "\M-[231z" 'scroll-down)         ;; F11  Page Up
-;;(global-set-key "\M-[232z" 'scroll-up)           ;; F12  Page Down
-;;(global-set-key "\C-?" 'forward-char)              ;; Delete
-;;(global-set-key "\M-[228z" 'eval-region) ;; F5
-
-
-;;(global-set-key [(shift insert)]
-;;  (lambda () (interactive) (x-insert-selection t nil)))
-
-;;(load-library "gnuserv")
-;;(gnuserv-start)
 
 
 ;;----------------------------------------------------------------------
@@ -429,7 +379,6 @@
   ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
   ;; Your init file should contain only one such instance.
  )
-
 
 
 (eval-after-load "ediff"
