@@ -2,11 +2,12 @@
 ;;  Common Emacs configuration file
 ;;  site-specific stuff should be in .emacs-site
 
-(setq load-path (append (list "~/emacs")  load-path))
-(setq load-path (append (list "~/emacs")  load-path))
-(setq load-path (append (list "~/emacs/site")  load-path))
+;; shared stuff
+(setq load-path (append (list "~/emacs.d")  load-path))
+(setq load-path (append (list "~/emacs.d/site")  load-path))
 
-(load "~/.emacs.local")
+;; local stuff
+(setq load-path (append (list "~/.emacs.d")  load-path))
 
 (display-time)
 (setq inhibit-splash-screen t)
