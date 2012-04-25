@@ -1,10 +1,10 @@
-;;
+;; -*-lisp-*-
 ;;  Common Emacs configuration file
 ;;  site-specific stuff should be in .emacs-site
 
 ;; shared stuff
-(setq load-path (append (list "~/emacs.d")  load-path))
-(setq load-path (append (list "~/emacs.d/site")  load-path))
+(setq load-path (append (list "~/emacs.d")      load-path))
+(setq load-path (append (list "~/emacs.d/site") load-path))
 
 (display-time)
 (setq inhibit-splash-screen t)
@@ -16,9 +16,9 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 
-; (add-hook 'emacs-startup-hook (lambda () (tool-bar-mode -1)))
-(tool-bar-mode nil)
-(menu-bar-mode nil)
+(add-hook 'emacs-startup-hook (lambda () (tool-bar-mode -1)))
+;(tool-bar-mode nil)
+;(menu-bar-mode nil)
 
 ;; kill annoying "File <foo> changed on disk.  Reread from disk" modal
 (setq use-dialog-box nil)
