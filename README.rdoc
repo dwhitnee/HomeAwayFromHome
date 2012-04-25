@@ -9,6 +9,12 @@ common dotfiles and other global emacs and zsh configuration
   cd ~/somewhere
   rake install
 
+For local overrides, you can make
+ ~/.environment     # login shell overrides
+ ~/.localrc         # interactive shell overrides
+ ~/.emacs.local     # emacs mode overrides
+
+
 == Misc
 
 Random fun commands:
