@@ -6,9 +6,6 @@
 (setq load-path (append (list "~/emacs.d")  load-path))
 (setq load-path (append (list "~/emacs.d/site")  load-path))
 
-;; local stuff
-(setq load-path (append (list "~/.emacs.d")  load-path))
-
 (display-time)
 (setq inhibit-splash-screen t)
 
@@ -20,7 +17,7 @@
 (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 
 ; (add-hook 'emacs-startup-hook (lambda () (tool-bar-mode -1)))
-; (tool-bar-mode nil)
+(tool-bar-mode nil)
 (menu-bar-mode nil)
 
 ;; kill annoying "File <foo> changed on disk.  Reread from disk" modal
@@ -37,7 +34,7 @@
 ; (setq debug-on-error t)
 
 
-;;-----------------------Dave's Definitions ------------------------------
+;;----------------------- Keys and Definitions ------------------------------
 
 (autoload 'sql-oracle "sql" "Interactive SQL mode." t)
 
@@ -110,24 +107,6 @@
       )
   )
 
-;;----------------------------------------------------------------------
-;; Ruby Stuff
-
-(autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
-(setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
-(setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
-
-(setq ruby-indent-level 2)
-
-
-;;----------------------------------------------------------------------
-
-
-(setq load-path (append (list "~/emacs/html")  load-path))
-(setq load-path (append (list "~/emacs/site/mmm-mode")  load-path))
-
-
-
 ;; --------------------- Glenn's cool stuff ------------------------------
 
 (global-set-key "\C-\M-l" 'what-line)
@@ -146,32 +125,43 @@
 (global-set-key "\C-n" 'chop-move-down)
 
 
+;;----------------------------------------------------------------------
+;; Ruby Stuff
 
-;; steveyegge's Javascript mode
-;(autoload 'js2-mode "js2" nil t)
-;(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+; (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
+; (setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
+(setq interpreter-mode-alist
+      (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
+
+(setq ruby-indent-level 2)
+
 
 ;;----------------------------------------------------------------------
-;;     C++ mode
+
+
+
+
 ;;----------------------------------------------------------------------
-;;(autoload 'c-mode "c-mode" "C Editing Mode" t)
-;;(autoload 'c++-mode   "c++-mode" "C++ Editing Mode" t)
+;; attach modes to file types
+;;----------------------------------------------------------------------
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-(add-to-list 'auto-mode-alist '("\\.html\\'"  . xml-mode))
-(add-to-list 'auto-mode-alist '("\\.rhtml\\'" . xml-mode))
-(add-to-list 'auto-mode-alist '("\\.jsp\\'"   . xml-mode))
+(add-to-list 'auto-mode-alist '("\\.html$"  . xml-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp$"   . xml-mode))
 
-(add-to-list 'auto-mode-alist '("\\.java\\'" . java-mode))
+(add-to-list 'auto-mode-alist '("\\.java$" . java-mode))
+
+(add-to-list 'auto-mode-alist '("\\.rb$"    . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rhtml$" . xml-mode))
 
 (add-to-list 'auto-mode-alist '("\\.c\\'"    . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'"    . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cc\\'"   . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.cxx\\'"  . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.c++\\'"  . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'"   . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cxx\\'"  . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hxx\\'"  . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.c++\\'"  . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h++\\'"  . c++-mode))
 
 ;; (nconc mode-list auto-mode-alist)
@@ -207,7 +197,6 @@
 
 
 
-;; ----------------- bgreen stuff ----------------------------------------
 
 (defconst my-c-style
   '((c-offsets-alist . ((case-label        . +)
@@ -216,25 +205,19 @@
   "Dave's C Programming Style")
 
 
-(defun my-c-mode-common-hook ()
+;;----------------------------------------------------------------------
+;; Programming mode hooks
+;;----------------------------------------------------------------------
+
+(defun my-c-mode-hook ()
   ;; my customizations for all of c-mode, c++-mode, and objc-mode
   ;; add my personal style and set it for the current buffer
   (c-add-style "PERSONAL" my-c-style t)
   (setq c-basic-offset 4)
   (setq c-brace-offset -4)
   (make-local-variable 'tab-width)
-;  (setq indent-tabs-mode 'nil)
-;  (setq c-indent-level 2)
-;  (setq c-continued-statment-offset 2)
-;  (setq c-label-offset 2)
-;  (setq c-continued-brace-offset 0)
-;  (setq c-argdeccl-indent 0)
-;  (setq comment-multi-line t)
-;  (setq tab-width 4)
-;  (make-local-variable 'tab-stop-list)
+  (setq indent-tabs-mode 'nil)
   )
-
-(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
 (defun my-java-mode-hook ()
   ;; my customizations for java mode
@@ -257,33 +240,26 @@
 (setq js2-mirror-mode nil)
 
 
-(add-hook 'js2-mode-hook 'my-javascript-mode-hook)
-(add-hook 'java-mode-hook 'my-java-mode-hook)
+(defun my-xml-mode-hook ()
+  (setq indent-tabs-mode nil)  ;; no tabs
+)
 
 
-(add-hook 'html-helper-mode-hook 'my-java-mode-hook)
-(add-hook 'html-mode-mmm-hook 'my-java-mode-hook)
-(add-hook 'html-mode-mmm-mode-hook 'my-java-mode-hook)
-(add-hook 'java-submode-hook 'my-java-mode-hook)
-(add-hook 'java-mode-submode-hook 'my-java-mode-hook)
-
-;; ---- end bgreen
+(add-hook 'c-mode-common-hook 'my-c-mode-hook)
+(add-hook 'java-mode-hook     'my-java-mode-hook)
+(add-hook 'js2-mode-hook      'my-javascript-mode-hook)
+(add-hook 'xml-mode-hook      'my-xml-mode-hook)
 
 
-;(setq c++-mode-hook
-;      '(lambda ()
-;        (setq c-argdecl-indent                  4)
-;        (setq c-brace-imaginary-offset          0)
-;        (setq c-brace-offset                   -4)
-;        (setq c-continued-statement-offset      4)
-;        (setq c-indent-level                    4)
-;        (setq c-label-offset                   -2)
-;        (setq c++-access-specifier-offset      -4)
-;        (setq c++-comment-only-line-offset '(0 0))
-;        (setq c++-empty-arglist-indent          4)
-;        (setq c++-friend-offset                 0)
-;        (define-key c++-mode-map "\15" 'reindent-then-newline-and-indent))
-;      )
+
+;(add-hook 'html-helper-mode-hook  'my-java-mode-hook)
+;(add-hook 'html-mode-mmm-hook     'my-java-mode-hook)
+;(add-hook 'html-mode-mmm-mode-hook 'my-java-mode-hook)
+;(add-hook 'java-submode-hook      'my-java-mode-hook)
+;(add-hook 'java-mode-submode-hook 'my-java-mode-hook)
+
+
+
 
 (defun cleanse-buffer (&optional arg)
        "Remove trailing white space, convert tabs to spaces, remove CR's, etc."
@@ -401,3 +377,7 @@
 ;;      ;; In ediff, show the two buffers side-by-side.
 ;;      (setq ediff-split-window-function 'split-window-horizontally)
 ;; ))
+
+
+;; local stuff
+(load "~/.emacs.local" t)
