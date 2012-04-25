@@ -1,4 +1,4 @@
-echo "zsh config"
+#echo "zsh config"
 
 export PATH=/usr/local/bin/:/usr/local/sbin:$PATH:/opt/local/bin:/usr/local/mysql/bin
 export JAVA_HOME=/Library/Java/Home

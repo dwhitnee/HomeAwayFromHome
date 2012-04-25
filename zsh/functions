@@ -1,4 +1,4 @@
-echo "zsh functions"
+#echo "zsh functions"
 
 setenv() {
     export $1="$2"

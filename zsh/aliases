@@ -1,4 +1,4 @@
-echo "zsh aliases"
+#echo "zsh aliases"
 
 alias ls="ls -CF"
 alias sl="ls"
