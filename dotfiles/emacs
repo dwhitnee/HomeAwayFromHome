@@ -16,9 +16,13 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 
+(add-to-list 'default-frame-alist '(tool-bar-lines . 0) )
+(add-to-list 'default-frame-alist '(menu-bar-lines . 0) )
+(add-to-list 'initial-frame-alist '(tool-bar-lines . 0) )
+(add-to-list 'initial-frame-alist '(menu-bar-lines . 0) )
 ; (add-hook 'emacs-startup-hook (lambda () (tool-bar-mode -1)))
-(tool-bar-mode nil)
-(menu-bar-mode nil)
+; (tool-bar-mode nil)
+; (menu-bar-mode nil)
 
 ;; kill annoying "File <foo> changed on disk.  Reread from disk" modal
 (setq use-dialog-box nil)
