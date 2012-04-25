@@ -1,4 +1,4 @@
-;;
+;; -*-lisp-*-
 ;;  Common Emacs configuration file
 ;;  site-specific stuff should be in .emacs.local
 
