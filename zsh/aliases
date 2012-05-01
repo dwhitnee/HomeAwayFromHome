@@ -12,8 +12,8 @@ alias du="du -kh"
 
 # cd ....
 alias '..'='cd ..'
-alias -g ...='../..'
-alias -g ....='../../..'
+alias -g   ...='../..'
+alias -g  ....='../../..'
 alias -g .....='../../../..'
 
 alias h="history 10"                    # brief history of time
