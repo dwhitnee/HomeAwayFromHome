@@ -22,4 +22,6 @@ Random fun commands:
  cd ....
  mandelbrot
 
+== More
 
+ https://github.com/robbyrussell/oh-my-zsh
