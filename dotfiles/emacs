@@ -13,8 +13,18 @@
 (normal-erase-is-backspace-mode 0)
 
 ;; tidy up whitespace in code
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-(add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
+(defun my-global-save-hook ()
+  (save-excursion
+    (delete-trailing-whitespace)
+    (untabify (point-min) (point-max))
+  )
+)
+
+
+(add-hook 'before-save-hook 'my-global-save-hook)
+
+;(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;(add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 
 (add-to-list 'default-frame-alist '(tool-bar-lines . 0) )
 (add-to-list 'default-frame-alist '(menu-bar-lines . 0) )
@@ -40,7 +50,7 @@
 
 ;;----------------------- Keys and Definitions ------------------------------
 
-(autoload 'sql-oracle "sql" "Interactive SQL mode." t)
+;; (autoload 'sql-oracle "sql" "Interactive SQL mode." t)
 
 (defun scroll-one-line-up (&optional arg)
   "Scroll the selected window up (forward in the text) one line (or N lines)."
@@ -123,8 +133,8 @@
 
 ;; chop weirdness
 
-(autoload 'chop-move-up "chop" nil t)
-(autoload 'chop-move-down "chop" nil t)
+;; (autoload 'chop-move-up "chop" nil t)
+;; (autoload 'chop-move-down "chop" nil t)
 (global-set-key "\C-p" 'chop-move-up)
 (global-set-key "\C-n" 'chop-move-down)
 
@@ -138,7 +148,8 @@
       (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
 
 (setq ruby-indent-level 2)
-
+(setq perl-indent-level 2)
+(setq css-indent-offset 2)
 
 ;;----------------------------------------------------------------------
 
@@ -153,6 +164,8 @@
 (autoload 'js2-mode "js2" nil t)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+(add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 
 (add-to-list 'auto-mode-alist '("\\.html$"  . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp$"   . xml-mode))
@@ -238,17 +251,21 @@
   ;; my customizations for javascript mode
   (setq js2-bounce-indent-flag nil)
   (setq js2-highlight-level 3)
-  (setq js2-basic-offset 4)
+  (setq js2-basic-offset 2)
   ;; no auto-closing parens/quotes
-  (set-face-foreground 'js2-external-variable-face "DarkRed")
+;;  (set-face-foreground 'js2-external-variable-face "DarkRed")
   (setq indent-tabs-mode nil);   ;; no tab chars, just spaces
   (global-set-key ""  'comment-region)
+
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 )
 (setq js2-mirror-mode nil)
 
 
 (defun my-xml-mode-hook ()
   (setq indent-tabs-mode nil)  ;; no tabs
+  (setq sgml-basic-offset 2)
 )
 
 
@@ -388,3 +405,22 @@
 
 ;; local stuff
 (load "~/.emacs.local" t)
+
+
+
+
+
+(defun ediff-current-buffer-revision ()
+  "Run Ediff to diff current buffer's file against VC depot.
+Uses `vc.el' or `rcs.el' depending on `ediff-version-control-package'."
+  (interactive)
+  (let ((file (or (buffer-file-name)
+          (error "Current buffer is not visiting a file"))))
+(if (and (buffer-modified-p)
+     (y-or-n-p (message "Buffer %s is modified. Save buffer? "
+                (buffer-name))))
+    (save-buffer (current-buffer)))
+(ediff-load-version-control)
+(funcall
+ (intern (format "ediff-%S-internal" ediff-version-control-package))
+ "" "" nil)))

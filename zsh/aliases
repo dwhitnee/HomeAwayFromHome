@@ -12,7 +12,7 @@ alias du="du -kh"
 
 # cd ....
 alias '..'='cd ..'
-alias -g   ...='../..'
+#alias -g   ...='../..'
 alias -g  ....='../../..'
 alias -g .....='../../../..'
 
@@ -21,8 +21,10 @@ alias gerp="grep"
 alias gep="grep"
 
 # lose all temps and old files
-#alias cleanup 'rm *.BAK *.o .*~ *~ ,* #*#; /bin/rm core'
-alias cleanup='find . -name "*~" | xargs rm'
+#alias cleanup 'rm *.BAK *.orig *.o .*~ *~ ,* #*#; /bin/rm core'
+#alias cleanup='find . -name "*~" | xargs rm'
+alias cleanup='find | egrep "~$|#|\.orig$" |xargs rm -v'
+
 
 #alias cd 'cd \!* ; echo "$cwd" ; echo -n ]2\;$cwd'
 alias lltod='pwd;D="`date|cut -c5-10`";ls -la |grep "$D"'
