@@ -5,4 +5,4 @@
 .DS_Store
 .svn
 .cvs
-build*
+/build*
