@@ -5,10 +5,14 @@
 
 ;; ========= New stuff ===========
 ;;;; package.el
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
 (require 'package)
-(setq package-user-dir (expand-file-name "elpa/" dot-emacs-dir))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;;(setq package-user-dir (expand-file-name "elpa/" dot-emacs-dir))
+(setq package-user-dir (expand-file-name "elpa/" user-emacs-directory))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -26,8 +30,10 @@
 ;;;; js2-mode
 (use-package js2-mode
   :ensure t
-)
+  :config (progn
+	    (add-hook 'js2-mode-hook      'my-javascript-mode-hook)))
 
+	     
 ;;;; flycheck  (various lints)
 (use-package flycheck
   :ensure t
@@ -43,8 +49,8 @@
 
 
 ;; shared stuff
-(add-to-list 'load-path "~/emacs.d")
-(add-to-list 'load-path "~/emacs.d/site")
+;(add-to-list 'load-path "~/emacs.d")
+;(add-to-list 'load-path "~/emacs.d/site")
 
 ;; (add-to-list 'default-frame-alist '(foreground-color . "white"))
 (add-to-list 'default-frame-alist '(background-color . "gray"))
@@ -205,13 +211,13 @@
 
 ;; why?
 (autoload 'js2-mode "js2" nil t)
-(require 'js-doc)
+;;(require 'js-doc)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 
-(add-to-list 'auto-mode-alist '("\\.html$"  . xml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.html$"  . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp$"   . xml-mode))
 
 (add-to-list 'auto-mode-alist '("\\.java$" . java-mode))
@@ -316,16 +322,7 @@
 
 (add-hook 'c-mode-common-hook 'my-c-mode-hook)
 (add-hook 'java-mode-hook     'my-java-mode-hook)
-(add-hook 'js2-mode-hook      'my-javascript-mode-hook)
 (add-hook 'xml-mode-hook      'my-xml-mode-hook)
-
-
-
-;(add-hook 'html-helper-mode-hook  'my-java-mode-hook)
-;(add-hook 'html-mode-mmm-hook     'my-java-mode-hook)
-;(add-hook 'html-mode-mmm-mode-hook 'my-java-mode-hook)
-;(add-hook 'java-submode-hook      'my-java-mode-hook)
-;(add-hook 'java-mode-submode-hook 'my-java-mode-hook)
 
 
 
