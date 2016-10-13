@@ -2,6 +2,46 @@
 ;;  Common Emacs configuration file
 ;;  site-specific stuff should be in .emacs.local
 
+
+;; ========= New stuff ===========
+;;;; package.el
+(require 'package)
+(setq package-user-dir (expand-file-name "elpa/" dot-emacs-dir))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
+
+;;;; magit
+(use-package magit
+  :ensure t
+  :bind   ("C-x g" . magit-status))
+
+
+;;;; js2-mode
+(use-package js2-mode
+  :ensure t
+)
+
+;;;; flycheck  (various lints)
+(use-package flycheck
+  :ensure t
+  :config (progn
+            (setq flycheck-mode-line-lighter " fl")
+            (add-hook 'after-init-hook 'global-flycheck-mode)))
+
+;; ========= end new stuff ===========
+
+
+
+
+
+
 ;; shared stuff
 (add-to-list 'load-path "~/emacs.d")
 (add-to-list 'load-path "~/emacs.d/site")
@@ -165,6 +205,7 @@
 
 ;; why?
 (autoload 'js2-mode "js2" nil t)
+(require 'js-doc)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
