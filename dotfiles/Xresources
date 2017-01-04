@@ -1,0 +1,92 @@
+!       David Whitney
+!       3/1/90
+!       X client resource settings
+!
+!------various geometries---------------
+
+XLoad*geometry:         200x100-10+318
+XClock*geometry:        80x80-0+0
+XBiff*geometry:         50x50-84+0
+Synchronize.geometry:   -0+145
+Emacs*Geometry:         81x30-2-76
+!Ghostscript*geometry:  +10+10
+TOra*geometry:          700x800
+
+!totalview*signalHandlingMode: Discard=SIGALRM Resend=SIGSEGV
+totalview*signalHandlingMode: Discard=SIGALRM
+
+!-------------------------------------------
+
+!*background:           gray90
+!*foreground:           black
+
+!#if (WIDTH <= 1024)
+!*font:                 -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso8859-1
+!*font:                 -misc-fixed-bold-r-normal-*-18-*-*-*-*-*-iso8859-1
+*font:                  -misc-fixed-bold-r-normal-*-13-100-*-*-*-80-iso8859-1
+
+
+!#else
+!*font:                 -*-screen-bold-r-normal-*-14-*-*-*-*-*-*-*
+!#endif
+!*font:                 *courier-bold-r*14*100-100*
+!*font:                -misc-fixed-bold-r-normal--13-*-*-*-c-70-iso8859-1
+!*DECstation font:       -*-courier-bold-r-normal-*-14-*-*-*-*-*-iso8859-1
+
+!-------------Emacs------------
+!emacs*Font:            *courier-bold-r*14*100-100*
+!emacs*Font:             -misc-fixed-bold-r-normal--13-*
+emacs*Font:             -misc-fixed-bold-r-normal--13-100-*-80-iso8859-1
+
+Emacs*Background:                       Gray80
+Emacs.default.attributeBackground:      Gray80
+
+!-------------XTerm------------
+
+smallterm*font:        -misc-fixed-bold-r-normal--13-100-100-100-c-70-iso8859-1
+big*Font:              -misc-fixed-bold-*-normal-*-15-*-*-*-*-*-*-*
+
+xterm-local*background: PapayaWhip
+!xterm-local*background: cornsilk2
+dwhitney-desktop*background:    rgb:bb/ff/bb
+!al2012*background:      powder blue
+al2012*background:      cornsilk2
+hydra*background:       powder blue
+shaggy*background:      violet
+sc-hook*background:     LightSteelBlue1
+sc-horn*background:     LightSteelBlue3
+sc-condor*background:   CadetBlue1
+
+ims-dev-101*background:         CadetBlue1
+ims-master-101*background:      CadetBlue2
+mt-services-101*background:     CadetBlue3
+ims-prod-101*background:        CadetBlue4
+
+ps-dev-2*background:    LightSteelBlue1
+
+XTerm*background:       cornsilk2
+XTerm*foreground:       black
+XTerm*cursorColor:      black
+XTerm*jumpScroll:       true
+XTerm*loginShell:       on
+XTerm*reverseWrap:      on
+XTerm*saveLines:        1500
+XTerm*showTitle:        on
+XTerm*visualBell:       true
+XTerm*scrollBar:        true
+XTerm*font:             -misc-fixed-bold-r-normal-*-13-100-*-*-*-80-iso8859-1
+
+XTerm*VT100.Translations: #override \n\
+        <KeyPress> Prior: scroll-back(1,page) \n\
+        <KeyPress> Next:  scroll-forw(1,page) \n\
+        Meta <KeyPress> Up: scroll-back(1,page) \n\
+        Meta <KeyPress> Down:  scroll-forw(1,page) \n\
+        Ctrl <KeyPress> Up: scroll-back(1,page) \n\
+        Ctrl <KeyPress> Down:  scroll-forw(1,page) \n\
+  Shift <KeyPress> Select: select-cursor-start() \
+
+gnome-terminal*VT100.Translations: #override \n\
+        <KeyPress> Prior: scroll-back(1,page) \n\
+        <KeyPress> Next:  scroll-forw(1,page) \n\
+  Shift <KeyPress> Select: select-cursor-start() \
+
