@@ -11,7 +11,7 @@
 (require 'package)
 ;;(setq package-user-dir (expand-file-name "elpa/" dot-emacs-dir))
 (setq package-user-dir (expand-file-name "elpa/" user-emacs-directory))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (package-initialize)
 
@@ -20,6 +20,14 @@
   (package-install 'use-package))
 (require 'use-package)
 
+;;; md Markdown mode
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 ;;;; magit
 (use-package magit
@@ -31,9 +39,9 @@
 (use-package js2-mode
   :ensure t
   :config (progn
-	    (add-hook 'js2-mode-hook      'my-javascript-mode-hook)))
+            (add-hook 'js2-mode-hook      'my-javascript-mode-hook)))
 
-	     
+
 ;;;; flycheck  (various lints)
 (use-package flycheck
   :ensure t
