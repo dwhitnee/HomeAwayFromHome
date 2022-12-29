@@ -1,4 +1,7 @@
 # login shell actions only
 
+echo "New zsh login shell"
+echo ${HOME}/.environment
+
 # .environment is shell-independent, but site-specific setup
-[[ -f ${HOME}~/.environment ]] && . ${HOME}/.environment
+[[ -f ${HOME}/.environment ]] && . ${HOME}/.environment
