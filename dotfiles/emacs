@@ -1,6 +1,15 @@
 ;; -*-lisp-*-
 ;;  Common Emacs configuration file
 ;;  site-specific stuff should be in .emacs.local
+;; ____________________________________________________________________________
+;; Aquamacs custom-file warning:
+;; Warning: After loading this .emacs file, Aquamacs will also load
+;; customizations from `custom-file' (customizations.el). Any settings there
+;; will override those made here.
+;; Consider moving your startup settings to the Preferences.el file, which
+;; is loaded after `custom-file':
+;; ~/Library/Preferences/Aquamacs Emacs/Preferences
+;; _____________________________________________________________________________
 
 
 ;; ========= New stuff ===========
@@ -427,8 +436,10 @@
 ;; '(js2-mirror-mode nil))
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
-  ;; Your init file should contain only one such instance.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 
@@ -474,3 +485,9 @@ Uses `vc.el' or `rcs.el' depending on `ediff-version-control-package'."
 (funcall
  (intern (format "ediff-%S-internal" ediff-version-control-package))
  "" "" nil)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(flycheck js2-mode magit markdown-mode use-package)))

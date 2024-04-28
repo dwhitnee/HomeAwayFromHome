@@ -52,8 +52,7 @@
 
 [user]
         name = David Whitney
-        email = dwhitney@amazon.com
-#        email = dwhitnee@gmail.com
+        email = dwhitnee@gmail.com
 [amazon]
         append-cr-url = true
         pull-request-by-default = false
@@ -62,3 +61,8 @@
 #        rebase = true
 [push]
         default = simple
+[filter "lfs"]
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
